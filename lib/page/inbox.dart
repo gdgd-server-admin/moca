@@ -56,13 +56,12 @@ class _InboxPageState extends State<InboxPage> {
         return ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
             return ListTile(
-              title: Text("20XX年XX月XX日 00:00"),
+                title: Text("20XX年XX月XX日 00:00"),
                 onTap: () {
                   setState(() {
                     item.isExpanded = !item.isExpanded;
                   });
-                }
-            );
+                });
           },
           body: Padding(
             child: Column(
