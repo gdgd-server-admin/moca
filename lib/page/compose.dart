@@ -14,7 +14,7 @@ class _CompsoePageState extends State<ComposePage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("home"),
+        title: Text("compose"),
       ),
       body: Center(
         child: Text("not implemented"),

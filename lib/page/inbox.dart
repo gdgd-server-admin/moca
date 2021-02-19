@@ -14,7 +14,7 @@ class _InboxPageState extends State<InboxPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("home"),
+        title: Text("inbox"),
       ),
       body: Center(
         child: Text("not implemented"),

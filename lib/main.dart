@@ -17,6 +17,9 @@ class MocaApp extends StatelessWidget {
       theme: ThemeData(
 
         primarySwatch: Colors.blue,
+        primaryColor: const Color(0xFF2196f3),
+        accentColor: const Color(0xFF2196f3),
+        canvasColor: const Color(0xFFfafafa),
 
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

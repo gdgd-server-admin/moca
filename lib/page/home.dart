@@ -8,30 +8,50 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //int _counter = 0;
-  /*
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-   */
-  void _refreshView() {}
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("home"),
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('すれ違いアプリMOCA'),
       ),
-      body: Center(
-        child: Text("not implemented"),
+      body: new Padding(
+        child: new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              new Padding(
+                child: new RaisedButton(
+                    key: null,
+                    onPressed: () => Navigator.of(context).pushNamed("/compose"),
+                    color: const Color(0xFFe0e0e0),
+                    child: new Text(
+                      "とばす",
+                      style: new TextStyle(
+                          fontSize: 64.0,
+                          color: const Color(0xFF000000),
+                          fontWeight: FontWeight.w200,
+                          fontFamily: "Roboto"),
+                    )),
+                padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+              ),
+              new Padding(
+                child: new RaisedButton(
+                    key: null,
+                    onPressed: () => Navigator.of(context).pushNamed("/inbox"),
+                    color: const Color(0xFFe0e0e0),
+                    child: new Text(
+                      "ひろう",
+                      style: new TextStyle(
+                          fontSize: 64.0,
+                          color: const Color(0xFF000000),
+                          fontWeight: FontWeight.w200,
+                          fontFamily: "Roboto"),
+                    )),
+                padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+              )
+            ]),
+        padding: const EdgeInsets.all(10.0),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _refreshView,
@@ -40,4 +60,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  void _refreshView() {}
 }
