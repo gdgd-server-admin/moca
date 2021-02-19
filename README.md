@@ -18,7 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 ## iBeaconのmajorとminorの使い道
 
 ### major
-そのまま10進として扱って回答バージョンとする
+そのまま10進として扱って回答バージョンとする  
 手持ちの質問データのバージョン番号と照合して関係ないやつは捨てる？
 
 ### minor
@@ -31,7 +31,7 @@ samples, guidance on mobile development, and a full API reference.
 ### 重要
 - サービスとしてコードを実行
 - BLEのビーコンを飛ばす（プラグインは使えそうなやつをとりあえず落とした）
-- ビーコンを拾った結果を端末に保存しておく
+- ビーコンを拾った結果を端末に保存しておく→Hive
 - ビーコン拾った結果を画面で集計して見る
 
 ### 後回し

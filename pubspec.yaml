@@ -32,11 +32,18 @@ dependencies:
   # ビーコンを送受信するうえで必要なもの
   flutter_beacon: ^0.3.0
   beacon_broadcast: ^0.2.3
-
+  # ビーコン受信ログを保存するのに必要なもの
+  hive: any
+  hive_flutter: any # contains the binaries
+  path_provider: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # 開発中にローカル保持を管理したりするもの
+  hive_generator: any
+  #build_runner: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
