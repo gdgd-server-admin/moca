@@ -8,7 +8,11 @@ class ComposePage extends StatefulWidget{
 
 class _CompsoePageState extends State<ComposePage>{
 
-  void _setBeaconConfig(){}
+  void _setBeaconConfig(){
+
+    // すべてが終わったらホーム画面に戻る
+    Navigator.of(context).pop();
+  }
 
   /* 各回答のフラグ */
   bool _value0 = false;
