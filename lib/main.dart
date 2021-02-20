@@ -10,6 +10,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter();
   await Hive.openBox('settings'); // 設定用のBoxを開いておく
+  await Hive.openBox('logs'); // 受診ログのBoxも開いておく
   runApp(MocaApp());
 }
 
