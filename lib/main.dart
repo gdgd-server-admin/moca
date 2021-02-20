@@ -4,7 +4,12 @@ import 'package:moca/page/inbox.dart';
 import 'package:moca/page/home.dart';
 import 'package:moca/page/compose.dart';
 
-void main() {
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('settings'); // 設定用のBoxを開いておく
   runApp(MocaApp());
 }
 

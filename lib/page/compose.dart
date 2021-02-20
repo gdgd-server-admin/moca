@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class ComposePage extends StatefulWidget{
   @override
@@ -8,7 +9,19 @@ class ComposePage extends StatefulWidget{
 
 class _CompsoePageState extends State<ComposePage>{
 
-  void _setBeaconConfig(){
+  void _setBeaconConfig() async{
+
+    var settings = Hive.box("settings");
+
+    var newMajor = 0;
+    var newMinor = 0;
+
+    await settings.put("beacon_major_id",newMajor);
+    await settings.put("beacon_minor_id",newMinor);
+
+    /*
+    設定が保存できたので新しい設定でビーコン送信の初期化処理を行う
+     */
 
     // すべてが終わったらホーム画面に戻る
     Navigator.of(context).pop();
