@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class HomePage extends StatefulWidget {
   HomePage() : super();
@@ -61,5 +62,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _refreshView() {}
+  void _refreshView() {
+    var settings = Hive.box("settings");
+    var major = settings.get("beacon_major_id");
+    var minor = settings.get("beacon_minor_id");
+    print("beacon_major_id : $major");
+    print("beacon_minor_id : $minor");
+  }
 }

@@ -16,6 +16,29 @@ class _CompsoePageState extends State<ComposePage>{
     var newMajor = 0;
     var newMinor = 0;
 
+    // boolを０１に変換してつなげていく
+    var binaryString = "";
+    binaryString = binaryString + (_value15 ? "1" : "0");
+    binaryString = binaryString + (_value14 ? "1" : "0");
+    binaryString = binaryString + (_value13 ? "1" : "0");
+    binaryString = binaryString + (_value12 ? "1" : "0");
+    binaryString = binaryString + (_value11 ? "1" : "0");
+    binaryString = binaryString + (_value10 ? "1" : "0");
+    binaryString = binaryString + (_value9 ? "1" : "0");
+    binaryString = binaryString + (_value8 ? "1" : "0");
+    binaryString = binaryString + (_value7 ? "1" : "0");
+    binaryString = binaryString + (_value6 ? "1" : "0");
+    binaryString = binaryString + (_value5 ? "1" : "0");
+    binaryString = binaryString + (_value4 ? "1" : "0");
+    binaryString = binaryString + (_value3 ? "1" : "0");
+    binaryString = binaryString + (_value2 ? "1" : "0");
+    binaryString = binaryString + (_value1 ? "1" : "0");
+    binaryString = binaryString + (_value0 ? "1" : "0");
+    // 2バイト分の2進数文字列ができあがる
+
+    newMinor = int.parse(binaryString,radix: 2); // 10進数に変換する
+
+    // 保存処理
     await settings.put("beacon_major_id",newMajor);
     await settings.put("beacon_minor_id",newMinor);
 
