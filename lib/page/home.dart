@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_beacon/flutter_beacon.dart';
+import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
 
 class HomePage extends StatefulWidget {
   HomePage() : super();
@@ -9,6 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  BeaconBroadcast beaconBroadcast = BeaconBroadcast();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -24,7 +30,8 @@ class _HomePageState extends State<HomePage> {
               new Padding(
                 child: new RaisedButton(
                     key: null,
-                    onPressed: () => Navigator.of(context).pushNamed("/compose"),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed("/compose"),
                     color: const Color(0xFFe0e0e0),
                     child: new Text(
                       "とばす",
@@ -62,11 +69,50 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+
+    initBeacon();
+  }
+
   void _refreshView() {
     var settings = Hive.box("settings");
     var major = settings.get("beacon_major_id");
     var minor = settings.get("beacon_minor_id");
     print("beacon_major_id : $major");
     print("beacon_minor_id : $minor");
+  }
+
+  void initBeacon() async {
+    try {
+      // or if you want to include automatic checking permission
+      await flutterBeacon.initializeAndCheckScanning;
+
+      var settings = Hive.box("settings");
+      var major = await settings.get("beacon_major_id");
+      var minor = await settings.get("beacon_minor_id");
+      if (major != null && minor != null) {
+        // 設定が保存されているのでビーコン送信処理を初期化して送信を始める
+        try {
+          BeaconStatus transmissionSupportStatus = await beaconBroadcast.checkTransmissionSupported();
+          bool isAdvertising = await beaconBroadcast.isAdvertising();
+
+          if (!isAdvertising && transmissionSupportStatus == BeaconStatus.supported) {
+            await beaconBroadcast
+                .setUUID(Uuid().v5(Uuid.NAMESPACE_URL, 'moca.gdgd.jp.net'))
+                .setMajorId(major)
+                .setMinorId(minor)
+                .start();
+          }
+        } catch (e) {
+          print("ビーコンを送信しようとしてエラー");
+          print(e);
+        }
+      }
+    } on PlatformException catch (e) {
+      // library failed to initialize, check code and message
+      print(e);
+    }
   }
 }
