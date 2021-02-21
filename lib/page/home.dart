@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
 
       try {
         BeaconStatus transmissionSupportStatus =
-        await beaconBroadcast.checkTransmissionSupported();
+            await beaconBroadcast.checkTransmissionSupported();
         bool isAdvertising = await beaconBroadcast.isAdvertising();
         bool isTransmissionSupported =
             transmissionSupportStatus == BeaconStatus.supported;
@@ -150,17 +150,15 @@ class _HomePageState extends State<HomePage> {
         print(e);
       }
 
-
       /* ビーコン受信処理の初期化 */
       await flutterBeacon.initializeScanning;
 
       AuthorizationStatus status = await flutterBeacon.authorizationStatus;
-      if (! (status == AuthorizationStatus.allowed
-          || status == AuthorizationStatus.always
-          || status == AuthorizationStatus.whenInUse)) {
-        Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text("位置情報サービスをオンにする必要があります"))
-        );
+      if (!(status == AuthorizationStatus.allowed ||
+          status == AuthorizationStatus.always ||
+          status == AuthorizationStatus.whenInUse)) {
+        Scaffold.of(context)
+            .showSnackBar(SnackBar(content: Text("位置情報サービスをオンにする必要があります")));
         return;
       }
       setState(() {
@@ -177,7 +175,11 @@ class _HomePageState extends State<HomePage> {
       flutterBeacon.ranging(regions).listen((RangingResult result) {
         if (result != null && result.beacons.isNotEmpty) {
           result.beacons.forEach((beacon) {
-            if (beacon.proximityUUID.toLowerCase() == Uuid().v5(Uuid.NAMESPACE_URL, 'moca.gdgd.jp.net').toString().toLowerCase()) {
+            if (beacon.proximityUUID.toLowerCase() ==
+                Uuid()
+                    .v5(Uuid.NAMESPACE_URL, 'moca.gdgd.jp.net')
+                    .toString()
+                    .toLowerCase()) {
               print('beaconを検出したよ！');
               print(beacon.toJson.toString());
               ReceivedBeacon recv = new ReceivedBeacon();
@@ -188,7 +190,7 @@ class _HomePageState extends State<HomePage> {
               // 数値からフラグに変換する処理を呼び出す
 
               var buffer = Hive.box("logs");
-              buffer.put(beacon.macAddress,recv);
+              buffer.put(beacon.macAddress, recv);
             }
           });
         }
@@ -197,7 +199,7 @@ class _HomePageState extends State<HomePage> {
       flutterBeacon.monitoring(regions).listen((MonitoringResult result) {
         if (result != null && result.region != null) {
           // Rangingのデータは貯めておいて離れたタイミングで書き込みに行く
-          if(result.monitoringEventType == MonitoringEventType.didExitRegion){
+          if (result.monitoringEventType == MonitoringEventType.didExitRegion) {
             print("ビーコンのやり取りが終わったので画面に反映するよ");
             /*
             ここに到達する条件は
@@ -206,9 +208,29 @@ class _HomePageState extends State<HomePage> {
              */
             var inbox = Hive.box("inbox");
             var buffer = Hive.box("logs");
-            for(var i = 0; i < buffer.length;i++){
-              var row = buffer.getAt(i);
-              inbox.add(row);
+            for (var i = 0; i < buffer.length; i++) {
+              var row = buffer.getAt(i) as ReceivedBeacon;
+              var newrow = new ReceivedBeacon();
+              newrow.recvDate = row.recvDate;
+              newrow.rawMajor = row.rawMajor;
+              newrow.rawMinor = row.rawMinor;
+              newrow.answer0 = row.answer0;
+              newrow.answer1 = row.answer1;
+              newrow.answer2 = row.answer2;
+              newrow.answer3 = row.answer3;
+              newrow.answer4 = row.answer4;
+              newrow.answer5 = row.answer5;
+              newrow.answer6 = row.answer6;
+              newrow.answer7 = row.answer7;
+              newrow.answer8 = row.answer8;
+              newrow.answer9 = row.answer9;
+              newrow.answer10 = row.answer10;
+              newrow.answer11 = row.answer11;
+              newrow.answer12 = row.answer12;
+              newrow.answer13 = row.answer13;
+              newrow.answer14 = row.answer14;
+              newrow.answer15 = row.answer15;
+              inbox.add(newrow); // コピーしたオブジェクトを保存用のBoxへ
             }
             buffer.clear(); // inboxに移し終わったので中身を空にする
           }
@@ -218,7 +240,6 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         isMonitorStarted = true;
       });
-
     } on PlatformException catch (e) {
       // library failed to initialize, check code and message
       print(e);

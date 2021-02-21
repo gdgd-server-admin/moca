@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moca/model/beacon_adapter.dart';
 
 import 'package:moca/page/inbox.dart';
 import 'package:moca/page/home.dart';
@@ -9,6 +10,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   await Hive.initFlutter();
+  await Hive.registerAdapter(BeaconAdapter());
   await Hive.openBox('settings'); // 設定用のBoxを開いておく
   await Hive.openBox('logs'); // 受診ログのBoxも開いておく
   await Hive.openBox('inbox'); // 画面表示用データを保存するBoxも開いておく
