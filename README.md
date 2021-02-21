@@ -40,3 +40,8 @@ samples, guidance on mobile development, and a full API reference.
 
 ## 役に立ちそうなもの
 https://flutterstudio.app/
+
+## その他
+MACアドレスをキーにしていることで端末を特定できるかもしれない問題  
+→最近の端末だとMACアドレスはビーコン送信開始のタイミングでランダムなものが入るので当てにならない  
+→上記の理由により同一端末のビーコンを多重に計上する可能性

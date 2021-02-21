@@ -186,6 +186,7 @@ class _HomePageState extends State<HomePage> {
               recv.recvDate = DateTime.now();
               recv.rawMajor = beacon.major;
               recv.rawMinor = beacon.minor;
+              recv.ExtractMinor(); // 予め展開しておく
 
               // 数値からフラグに変換する処理を呼び出す
 
