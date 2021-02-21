@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:moca/model/beacon.dart';
 
 class InboxPage extends StatefulWidget {
@@ -7,7 +8,11 @@ class InboxPage extends StatefulWidget {
 }
 
 class _InboxPageState extends State<InboxPage> {
-  void _refreshView() {}
+  void _refreshView() {
+    setState(() {
+      _data = generateItems(20);
+    });
+  }
   List<ReceivedBeacon> _data;
 
   @override
@@ -40,9 +45,21 @@ class _InboxPageState extends State<InboxPage> {
 
   // リストを作成
   List<ReceivedBeacon> generateItems(int numberOfItems) {
-    return List.generate(numberOfItems, (int index) {
-      return ReceivedBeacon();
-    });
+    var inbox = Hive.box("inbox");
+    int idx_from = inbox.length - 1;
+    int idx_to = (inbox.length - numberOfItems - 1 > 0) ? inbox.length - numberOfItems - 1 : 0;
+    print(idx_from.toString() + "-" + idx_to.toString());
+    List<ReceivedBeacon> result = new List<ReceivedBeacon>();
+    if(inbox.length > 0){
+      for(int i = idx_from;i > idx_to;i--){
+        result.add(inbox.getAt(i));
+      }
+    }else{
+      print("まだ何も受信していないのでは？");
+    }
+    result.sort((a,b) => a.recvDate.compareTo(b.recvDate));
+
+    return result.reversed.toList();
   }
 
   Widget _buildPanel() {
@@ -56,7 +73,7 @@ class _InboxPageState extends State<InboxPage> {
         return ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
             return ListTile(
-                title: Text("20XX年XX月XX日 00:00"),
+                title: Text("${item.recvDate.year.toString()}年${item.recvDate.month.toString().padLeft(2," ")}月${item.recvDate.day.toString().padLeft(2," ")}日 ${item.recvDate.hour.toString().padLeft(2," ")}:${item.recvDate.minute.toString().padLeft(2," ")}"),
                 onTap: () {
                   setState(() {
                     item.isExpanded = !item.isExpanded;
