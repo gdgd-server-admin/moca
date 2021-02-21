@@ -13,7 +13,7 @@ class _CompsoePageState extends State<ComposePage>{
 
     var settings = Hive.box("settings");
 
-    var newMajor = 0;
+    var newMajor = 1; // メジャーバージョン０はiOSに予約されているらしいので避ける
     var newMinor = 0;
 
     // boolを０１に変換してつなげていく
