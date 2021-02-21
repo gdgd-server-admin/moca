@@ -116,22 +116,23 @@ class _HomePageState extends State<HomePage> {
       var settings = Hive.box("settings");
       var major = await settings.get("beacon_major_id");
       var minor = await settings.get("beacon_minor_id");
-      if (major != null && minor != null) {
-        // 設定が保存されているのでビーコン送信処理を初期化して送信を始める
-        try {
-          BeaconStatus transmissionSupportStatus =
-              await beaconBroadcast.checkTransmissionSupported();
-          bool isAdvertising = await beaconBroadcast.isAdvertising();
-          bool isTransmissionSupported =
-              transmissionSupportStatus == BeaconStatus.supported;
 
-          print("ビーコン発信中： $isAdvertising");
-          print("送信に対応：　$isTransmissionSupported");
+      try {
+        BeaconStatus transmissionSupportStatus =
+        await beaconBroadcast.checkTransmissionSupported();
+        bool isAdvertising = await beaconBroadcast.isAdvertising();
+        bool isTransmissionSupported =
+            transmissionSupportStatus == BeaconStatus.supported;
 
-          if (!isAdvertising && isTransmissionSupported) {
-            setState(() {
-              isTransmissionCheckPassed = true;
-            });
+        print("ビーコン発信中： $isAdvertising");
+        print("送信に対応：　$isTransmissionSupported");
+
+        if (!isAdvertising && isTransmissionSupported) {
+          setState(() {
+            isTransmissionCheckPassed = true;
+          });
+          if (major != null && minor != null) {
+            // 設定が保存されているのでビーコン送信処理を初期化して送信を始める
             final String iBeaconFormat =
                 'm:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24';
             await beaconBroadcast
@@ -145,14 +146,15 @@ class _HomePageState extends State<HomePage> {
             setState(() {
               isTransmissionStarted = true;
             });
-          } else {
-            print("対応していないのでは？");
           }
-        } catch (e) {
-          print("ビーコンを送信しようとしてエラー");
-          print(e);
+        } else {
+          print("対応していないのでは？");
         }
+      } catch (e) {
+        print("ビーコンを送信しようとしてエラー");
+        print(e);
       }
+
 
       /* ビーコン受信処理の初期化 */
       await flutterBeacon.initializeScanning;
