@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:beacon_broadcast/beacon_broadcast.dart';
@@ -18,8 +15,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   BeaconBroadcast beaconBroadcast = BeaconBroadcast();
-  final StreamController<String> beaconEventsController =
-  StreamController<String>.broadcast();
 
   bool isMonitorStarted = false;
   bool isTransmissionStarted = false;
@@ -179,7 +174,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ];
 
-      StreamSubscription streamRanging = flutterBeacon.ranging(regions).listen((RangingResult result) {
+      flutterBeacon.ranging(regions).listen((RangingResult result) {
         if (result != null && result.beacons.isNotEmpty) {
           result.beacons.forEach((beacon) {
             if (beacon.proximityUUID.toLowerCase() == Uuid().v5(Uuid.NAMESPACE_URL, 'moca.gdgd.jp.net').toString().toLowerCase()) {
@@ -192,17 +187,31 @@ class _HomePageState extends State<HomePage> {
 
               // 数値からフラグに変換する処理を呼び出す
 
-              var inbox = Hive.box("logs");
-              inbox.put(beacon.macAddress,recv);
+              var buffer = Hive.box("logs");
+              buffer.put(beacon.macAddress,recv);
             }
           });
         }
       });
 
-      StreamSubscription streamMonitoring = flutterBeacon.monitoring(regions).listen((MonitoringResult result) {
+      flutterBeacon.monitoring(regions).listen((MonitoringResult result) {
         if (result != null && result.region != null) {
-          // バックグラウンドで動かすならモニタリングのほうがいいようだが？
-          // Rangingのデータは貯めておいて離れたタイミングで書き込みに行く？
+          // Rangingのデータは貯めておいて離れたタイミングで書き込みに行く
+          if(result.monitoringEventType == MonitoringEventType.didExitRegion){
+            print("ビーコンのやり取りが終わったので画面に反映するよ");
+            /*
+            ここに到達する条件は
+            「周りに存在していたmoca.gdgd.jp.netなビーコンが1個もなくなった」
+            なので、この後行われる画面のリフレッシュの瞬間を目撃しても発信者の特定は難しい（はず）
+             */
+            var inbox = Hive.box("inbox");
+            var buffer = Hive.box("logs");
+            for(var i = 0; i < buffer.length;i++){
+              var row = buffer.getAt(i);
+              inbox.add(row);
+            }
+            buffer.clear(); // inboxに移し終わったので中身を空にする
+          }
         }
       });
 

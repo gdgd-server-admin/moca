@@ -11,6 +11,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('settings'); // 設定用のBoxを開いておく
   await Hive.openBox('logs'); // 受診ログのBoxも開いておく
+  await Hive.openBox('inbox'); // 画面表示用データを保存するBoxも開いておく
   runApp(MocaApp());
 }
 
