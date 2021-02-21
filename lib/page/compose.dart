@@ -1,5 +1,7 @@
+import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
 
 class ComposePage extends StatefulWidget{
   @override
@@ -8,6 +10,8 @@ class ComposePage extends StatefulWidget{
 }
 
 class _CompsoePageState extends State<ComposePage>{
+
+  BeaconBroadcast beaconBroadcast = BeaconBroadcast();
 
   void _setBeaconConfig() async{
 
@@ -45,6 +49,32 @@ class _CompsoePageState extends State<ComposePage>{
     /*
     設定が保存できたので新しい設定でビーコン送信の初期化処理を行う
      */
+    try{
+      BeaconStatus transmissionSupportStatus =
+      await beaconBroadcast.checkTransmissionSupported();
+      bool isAdvertising = await beaconBroadcast.isAdvertising();
+      bool isTransmissionSupported =
+          transmissionSupportStatus == BeaconStatus.supported;
+
+      print("ビーコン発信中： $isAdvertising");
+      print("送信に対応：　$isTransmissionSupported");
+      if(isTransmissionSupported){
+        beaconBroadcast.stop();
+        final String iBeaconFormat =
+            'm:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24';
+        await beaconBroadcast
+            .setUUID(Uuid().v5(Uuid.NAMESPACE_URL, 'moca.gdgd.jp.net'))
+            .setIdentifier("moca.gdgd.jp.net")
+            .setMajorId(newMajor)
+            .setMinorId(newMinor)
+            .setLayout(iBeaconFormat)
+            .start();
+      }else{
+        print("やはり対応していないのでは？");
+      }
+    }catch(e){
+      print(e);
+    }
 
     // すべてが終わったらホーム画面に戻る
     Navigator.of(context).pop();
@@ -328,5 +358,4 @@ class _CompsoePageState extends State<ComposePage>{
       ),
     );
   }
-
 }
