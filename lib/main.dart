@@ -4,6 +4,7 @@ import 'package:moca/model/beacon_adapter.dart';
 import 'package:moca/page/inbox.dart';
 import 'package:moca/page/home.dart';
 import 'package:moca/page/compose.dart';
+import 'package:moca/page/setting.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -37,6 +38,7 @@ class MocaApp extends StatelessWidget {
         '/home': (BuildContext context) => new HomePage(),
         '/compose': (BuildContext context) => new ComposePage(),
         '/inbox': (BuildContext context) => new InboxPage(),
+        '/setting': (BuildContext context) => new SettingPage(),
       },
     );
   }

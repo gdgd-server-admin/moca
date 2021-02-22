@@ -26,6 +26,15 @@ class _HomePageState extends State<HomePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('すれ違いアプリMOCA'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () => Navigator.of(context).pushNamed("/setting"),
+          )
+        ],
       ),
       body: new Padding(
         child: new Column(
