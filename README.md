@@ -1,21 +1,12 @@
 # moca
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## 資料一式
 
-A few resources to get you started if this is your first Flutter project:
+docフォルダの下にMarkdownで作成しているのでこのままGitea経由でご覧ください。
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-## iBeaconのmajorとminorの使い道
+## iBeaconのmajorとminorの使い道（あとでdocフォルダに移動）
 
 ### major
 そのまま10進として扱って回答バージョンとする  
@@ -26,7 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ２（DEX）　→　0000 0000 0000 0010（BIN）　→　質問２の回答だけＹＥＳ
 
-## 必要そうなもの
+## 必要そうなもの（課題にできたら削除
 
 ### 重要
 - サービスとしてコードを実行
@@ -38,10 +29,15 @@ samples, guidance on mobile development, and a full API reference.
 - 質問サーバを用意して質問をダウンロードする
 - 古くなったビーコン受信ログを削除
 
-## 役に立ちそうなもの
+## 役に立ちそうなもの（あとでdocフォルダに移動）
 https://flutterstudio.app/
 
 ## その他
+docフォルダのMarkdownに資料を集約するか、Wikiを使うか  
+→wiki側もGitで管理できているようだ。  
+→docフォルダよりもエディタとかあるからいいのでは？  
+
+
 MACアドレスをキーにしていることで端末を特定できるかもしれない問題  
 →最近の端末だとMACアドレスはビーコン送信開始のタイミングでランダムなものが入るので当てにならない  
 →上記の理由により同一端末のビーコンを多重に計上する可能性
