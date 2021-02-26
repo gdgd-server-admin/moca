@@ -117,6 +117,15 @@ class _CompsoePageState extends State<ComposePage>{
   String _question15 = "16個目の質問";
 
   @override
+  void initState(){
+    downloadData();
+  }
+
+  void downloadData() async {
+    print("設定からURLを取り出してデータをダウンロードしてくる");
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
