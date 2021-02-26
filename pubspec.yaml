@@ -38,6 +38,7 @@ dependencies:
   path_provider: any
 
   uuid: 2.2.2
+  http:
 
 dev_dependencies:
   flutter_test:
