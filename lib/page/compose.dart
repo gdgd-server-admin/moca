@@ -2,6 +2,8 @@ import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ComposePage extends StatefulWidget{
   @override
@@ -40,6 +42,7 @@ class _CompsoePageState extends State<ComposePage>{
     binaryString = binaryString + (_value0 ? "1" : "0");
     // 2バイト分の2進数文字列ができあがる
 
+    newMajor = download_ver;
     newMinor = int.parse(binaryString,radix: 2); // 10進数に変換する
 
     // 保存処理
@@ -99,22 +102,24 @@ class _CompsoePageState extends State<ComposePage>{
   bool _value15 = false;
 
   /* 各質問の問題文 */
-  String _question0 = "1個目の質問";
-  String _question1 = "2個目の質問";
-  String _question2 = "3個目の質問";
-  String _question3 = "4個目の質問";
-  String _question4 = "5個目の質問";
-  String _question5 = "6個目の質問";
-  String _question6 = "7個目の質問";
-  String _question7 = "8個目の質問";
-  String _question8 = "9個目の質問";
-  String _question9 = "10個目の質問";
-  String _question10 = "11個目の質問";
-  String _question11 = "12個目の質問";
-  String _question12 = "13個目の質問";
-  String _question13 = "14個目の質問";
-  String _question14 = "15個目の質問";
-  String _question15 = "16個目の質問";
+  String _question0 = "1個目の質問を読込中…";
+  String _question1 = "2個目の質問を読込中…";
+  String _question2 = "3個目の質問を読込中…";
+  String _question3 = "4個目の質問を読込中…";
+  String _question4 = "5個目の質問を読込中…";
+  String _question5 = "6個目の質問を読込中…";
+  String _question6 = "7個目の質問を読込中…";
+  String _question7 = "8個目の質問を読込中…";
+  String _question8 = "9個目の質問を読込中…";
+  String _question9 = "10個目の質問を読込中…";
+  String _question10 = "11個目の質問を読込中…";
+  String _question11 = "12個目の質問を読込中…";
+  String _question12 = "13個目の質問を読込中…";
+  String _question13 = "14個目の質問を読込中…";
+  String _question14 = "15個目の質問を読込中…";
+  String _question15 = "16個目の質問を読込中…";
+
+  int download_ver = 1;
 
   @override
   void initState(){
@@ -123,6 +128,45 @@ class _CompsoePageState extends State<ComposePage>{
 
   void downloadData() async {
     print("設定からURLを取り出してデータをダウンロードしてくる");
+
+    var settings = Hive.box("settings");
+
+    var url = await settings.get("server_address");
+    print(url);
+
+    final response = await http.get(url);
+
+    print(response.statusCode);
+
+    if(response.statusCode == 200){
+
+      var latest_data = json.decode(response.body);
+
+      setState(() {
+
+        download_ver = latest_data['id'];
+
+        _question0 = latest_data['q1'];
+        _question1 = latest_data['q2'];
+        _question2 = latest_data['q3'];
+        _question3 = latest_data['q4'];
+        _question4 = latest_data['q5'];
+        _question5 = latest_data['q6'];
+        _question6 = latest_data['q7'];
+        _question7 = latest_data['q8'];
+        _question8 = latest_data['q9'];
+        _question9 = latest_data['q10'];
+        _question10 = latest_data['q11'];
+        _question11 = latest_data['q12'];
+        _question12 = latest_data['q13'];
+        _question13 = latest_data['q14'];
+        _question14 = latest_data['q15'];
+        _question15 = latest_data['q16'];
+      });
+
+    }else{
+      print("データが取得できなかった");
+    }
   }
 
   @override
