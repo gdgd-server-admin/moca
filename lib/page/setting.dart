@@ -15,7 +15,7 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('settings'),
+        title: new Text('すれ違いアプリUCON'),
       ),
       body: new SingleChildScrollView(
         scrollDirection: Axis.vertical,

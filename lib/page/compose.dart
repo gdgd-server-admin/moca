@@ -173,7 +173,7 @@ class _CompsoePageState extends State<ComposePage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("compose"),
+        title: Text("すれ違いアプリUCON"),
       ),
       body:
       new SingleChildScrollView(

@@ -28,7 +28,7 @@ class _InboxPageState extends State<InboxPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("inbox"),
+        title: Text("すれ違いアプリUCON"),
       ),
       body: SingleChildScrollView(
         child: Container(

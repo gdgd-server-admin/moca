@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('すれ違いアプリMOCA'),
+        title: new Text('すれ違いアプリUCON'),
         actions: <Widget>[
           IconButton(
             icon: Icon(
