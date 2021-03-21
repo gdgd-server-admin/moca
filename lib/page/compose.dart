@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:moca/model/checksheet.dart';
 
 class ComposePage extends StatefulWidget{
   @override
@@ -48,6 +49,27 @@ class _CompsoePageState extends State<ComposePage>{
     // 保存処理
     await settings.put("beacon_major_id",newMajor);
     await settings.put("beacon_minor_id",newMinor);
+
+    // チェックシートを保存
+    var checksheets = Hive.box("checksheets");
+    var newsheet = CheckSheet();
+    newsheet.q1 = _question0;
+    newsheet.q2 = _question1;
+    newsheet.q3 = _question2;
+    newsheet.q4 = _question3;
+    newsheet.q5 = _question4;
+    newsheet.q6 = _question5;
+    newsheet.q7 = _question6;
+    newsheet.q8 = _question7;
+    newsheet.q9 = _question8;
+    newsheet.q10 = _question9;
+    newsheet.q11 = _question10;
+    newsheet.q12 = _question11;
+    newsheet.q13 = _question12;
+    newsheet.q14 = _question13;
+    newsheet.q15 = _question14;
+    newsheet.q16 = _question15;
+    checksheets.put(newMajor,newsheet);
 
     /*
     設定が保存できたので新しい設定でビーコン送信の初期化処理を行う
