@@ -43,11 +43,11 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               new Padding(
-                child: new RaisedButton(
+                child: new ElevatedButton(
                     key: null,
                     onPressed: () =>
                         Navigator.of(context).pushNamed("/compose"),
-                    color: const Color(0xFFe0e0e0),
+                    style: ElevatedButton.styleFrom(primary: const Color(0xFFe0e0e0),),
                     child: new Text(
                       "とばす",
                       style: new TextStyle(
@@ -59,10 +59,10 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
               ),
               new Padding(
-                child: new RaisedButton(
+                child: new ElevatedButton(
                     key: null,
                     onPressed: () => Navigator.of(context).pushNamed("/inbox"),
-                    color: const Color(0xFFe0e0e0),
+                    style: ElevatedButton.styleFrom(primary: const Color(0xFFe0e0e0),),
                     child: new Text(
                       "ひろう",
                       style: new TextStyle(

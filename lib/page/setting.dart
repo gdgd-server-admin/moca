@@ -46,10 +46,10 @@ class _SettingPageState extends State<SettingPage> {
               ),
               Container(
                 height: 64.0,
-                child: new RaisedButton(
+                child: new ElevatedButton(
                     key: null,
                     onPressed: buttonPressed,
-                    color: const Color(0xFFe0e0e0),
+                    style: ElevatedButton.styleFrom(primary: const Color(0xFFe0e0e0),),
                     child: new Text(
                       "ほぞん",
                       style: new TextStyle(
