@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
       if (!(status == AuthorizationStatus.allowed ||
           status == AuthorizationStatus.always ||
           status == AuthorizationStatus.whenInUse)) {
-        Scaffold.of(context)
+        ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("位置情報サービスをオンにする必要があります")));
         return;
       }
